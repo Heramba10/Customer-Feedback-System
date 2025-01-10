@@ -15,7 +15,7 @@ class CustomUser(AbstractUser):
 
     # Use email as the username field
     USERNAME_FIELD = 'email'  
-    REQUIRED_FIELDS = ['username']  # username is still required for user creation
+    REQUIRED_FIELDS = ['username','first_name', 'last_name',]  # username is still required for user creation
 
     def __str__(self):
         return self.email
@@ -39,6 +39,7 @@ class Feedback(models.Model):
     # Timestamp when feedback is created
     created_at = models.DateTimeField(auto_now_add=True)
     
+    REQUIRED_FIELDS = ['tags']
     def save(self, *args, **kwargs):
         analyzer = SentimentIntensityAnalyzer()
         sentiment_score = analyzer.polarity_scores(self.comments)['compound']
@@ -50,12 +51,21 @@ class Feedback(models.Model):
         else:
             self.sentiment = 'Neutral'
 
+        # Debugging: Check if sentiment is calculated correctly
+        print(f"Sentiment: {self.sentiment}")
+
+        # Call the function to assign tags based on sentiment
+        self.tags = self.assign_tags_based_on_sentiment(self.comments, self.sentiment)
+        
+        # Debugging: Check if tags are assigned correctly
+        print(f"Tags: {self.tags}")
+
+        # Save the feedback instance
         super().save(*args, **kwargs)
-    
+
     def assign_tags_based_on_sentiment(self, comments, sentiment):
         tags = []
-    
-    
+        
         if sentiment == 'Positive':
             if "service" in comments.lower():
                 tags.append("Customer Service")
@@ -71,7 +81,7 @@ class Feedback(models.Model):
                 tags.append("Recommendation")
             tags.append("Praise")  # Generic praise tag
 
-    # Negative Sentiment
+        # Negative Sentiment
         elif sentiment == 'Negative':
             if "service" in comments.lower():
                 tags.append("Customer Service")
@@ -89,7 +99,7 @@ class Feedback(models.Model):
                 tags.append("Return Process")
             tags.append("Complaint")  # Generic complaint tag
 
-    # Neutral Sentiment
+        # Neutral Sentiment
         elif sentiment == 'Neutral':
             if "suggestion" in comments.lower():
                 tags.append("Suggestion")
@@ -98,8 +108,8 @@ class Feedback(models.Model):
             if "feedback" in comments.lower():
                 tags.append("General Feedback")
 
-    # Optional: Combine tags into a single string separated by commas
-        return ", ".join(tags)        
+        # Optional: Combine tags into a single string separated by commas
+        return ", ".join(tags)
 
     def __str__(self):
         return f"Feedback from {self.name} - {self.feedback_type}"
