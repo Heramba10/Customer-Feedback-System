@@ -51,6 +51,55 @@ class Feedback(models.Model):
             self.sentiment = 'Neutral'
 
         super().save(*args, **kwargs)
+    
+    def assign_tags_based_on_sentiment(self, comments, sentiment):
+        tags = []
+    
+    
+        if sentiment == 'Positive':
+            if "service" in comments.lower():
+                tags.append("Customer Service")
+            if "product" in comments.lower():
+                tags.append("Product Quality")
+            if "delivery" in comments.lower():
+                tags.append("Delivery")
+            if "packaging" in comments.lower():
+                tags.append("Packaging")
+            if "support" in comments.lower():
+                tags.append("Customer Support")
+            if "recommend" in comments.lower():
+                tags.append("Recommendation")
+            tags.append("Praise")  # Generic praise tag
+
+    # Negative Sentiment
+        elif sentiment == 'Negative':
+            if "service" in comments.lower():
+                tags.append("Customer Service")
+            if "product" in comments.lower():
+                tags.append("Product Quality")
+            if "delivery" in comments.lower():
+                tags.append("Delivery")
+            if "packaging" in comments.lower():
+                tags.append("Packaging")
+            if "support" in comments.lower():
+                tags.append("Customer Support")
+            if "refund" in comments.lower():
+                tags.append("Refund")
+            if "return" in comments.lower():
+                tags.append("Return Process")
+            tags.append("Complaint")  # Generic complaint tag
+
+    # Neutral Sentiment
+        elif sentiment == 'Neutral':
+            if "suggestion" in comments.lower():
+                tags.append("Suggestion")
+            if "improvement" in comments.lower():
+                tags.append("Improvement")
+            if "feedback" in comments.lower():
+                tags.append("General Feedback")
+
+    # Optional: Combine tags into a single string separated by commas
+        return ", ".join(tags)        
 
     def __str__(self):
         return f"Feedback from {self.name} - {self.feedback_type}"
