@@ -1,5 +1,8 @@
 // src/pages/Register.js
 import React, { useState } from 'react';
+import "../styles/Login.css";
+import "../styles/style.css"; 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 
 const Register = () => {
@@ -37,59 +40,88 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={userData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={userData.username}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={userData.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="re_password"  // Add re_password here for confirmation
-          placeholder="Confirm Password"
-          value={userData.re_password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="first_name"
-          placeholder="First Name"
-          value={userData.first_name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="text"
-          name="last_name"
-          placeholder="Last Name"
-          value={userData.last_name}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="wizard-content">
+      <div className="login-container"style={{ paddingTop: '82px', paddingBottom: '82px' }}>
+        <div className="login-card">
+          <div className="login-title">
+            <h3 className="text-center text-primary">Register</h3>
+          </div>
+          <form onSubmit={handleSubmit} className="tab-wizard2">
+            <div className="form-group row">
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={userData.email}
+                onChange={handleChange}
+                required
+                className="login-input"
+              />
+            </div>
+            <div className="form-group row">
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                value={userData.username}
+                onChange={handleChange}
+                required
+                className="login-input"
+              />
+            </div>
+            <div className="form-group row">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={userData.password}
+                onChange={handleChange}
+                required
+                className="login-input"
+              />
+            </div>
+            <div className="form-group row">
+              <input
+                type="password"
+                name="re_password"
+                placeholder="Confirm Password"
+                value={userData.re_password}
+                onChange={handleChange}
+                required
+                className="login-input"
+              />
+            </div>
+            
+           
+
+            <div className="row">
+              <div className="col-sm-12">
+                <div className="input-group mb-0">
+                  <button
+                    type="submit"
+                    className="btn btn-primary btn-lg btn-block"
+                    style={{ width: 'inherit' }}
+                  >
+                    Register
+                  </button>
+                </div>
+                <div className="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">
+                  OR
+                </div>
+                <div className="input-group mb-0">
+                  <a
+                    className="btn btn-outline-primary btn-lg btn-block"
+                    href="/"
+                    style={{ width: 'inherit' }}
+                  >
+                    Already have an account? Login
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
