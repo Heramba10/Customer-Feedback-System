@@ -1,6 +1,12 @@
+"use client"
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/api'; // Assuming you've created an Axios instance
+import "../styles/Login.css";
+import "../styles/style.css"; 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import api from '../api/api';
+// Assuming you've created an Axios instance
 
 const Login = () => {
   const [credentials, setCredentials] = useState({
@@ -33,7 +39,7 @@ const Login = () => {
             alert('Session expired. Please log in again.');
             localStorage.removeItem('access_token');
             localStorage.removeItem('refresh_token');
-            window.location.href = '/login'; // Optionally redirect to login
+            window.location.href = '/'; // Optionally redirect to login
           });
       }
     }
@@ -79,7 +85,7 @@ const Login = () => {
               alert('Session expired. Please log in again.');
               localStorage.removeItem('access_token');
               localStorage.removeItem('refresh_token');
-              window.location.href = '/login'; // Optionally redirect to login
+              window.location.href = '/'; // Optionally redirect to login
             });
         } else {
           console.error('Error logging in:', error);
@@ -89,28 +95,54 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          value={credentials.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Your Password"
-          value={credentials.password}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit">Login</button>
-      </form>
-    </div>
+   <div className="wizard-content">
+    <div className="login-container">
+        <div className="login-card">
+          <div className="login-title">
+            <h3 className='text-center text-primary'>Login</h3>
+          </div>
+          <form onSubmit={handleSubmit} className="tab-wizard2">
+            <div className="form-group row">
+          <input
+            type="email"
+            name="email"
+            placeholder="Your Email"
+            value={credentials.email}
+            onChange={handleChange}
+            required
+            className="login-input"
+              />
+            </div>
+          <div className="form-group row">
+          <input
+            type="password"
+            name="password"
+            placeholder="Your Password"
+            value={credentials.password}
+            onChange={handleChange}
+            required
+            className="login-input"
+              />
+            </div>
+          		<div className="row">
+								<div className="col-sm-12">
+									<div className="input-group mb-0">
+										
+										
+										<button type="submit" className="btn btn-primary btn-lg btn-block" style={{width: 'inherit'}}>Submit</button>
+										
+				
+									</div>
+									<div className="font-16 weight-600 pt-10 pb-10 text-center" data-color="#707373">OR</div>
+									<div className="input-group mb-0">
+										<a className="btn btn-outline-primary btn-lg btn-block" href="/register" style={{ width: 'inherit'}}>Register To Create Account</a>
+									</div>
+              </div>
+              </div>
+        </form>
+      </div>
+      </div>
+      </div>
   );
 };
 
