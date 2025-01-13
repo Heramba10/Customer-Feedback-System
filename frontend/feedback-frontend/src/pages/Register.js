@@ -115,6 +115,7 @@ const Register = () => {
                     style={{ width: 'inherit' }}
                   >
                     Already have an account? Login
+                    
                   </a>
                 </div>
               </div>
